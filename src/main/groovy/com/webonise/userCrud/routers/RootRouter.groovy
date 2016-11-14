@@ -8,6 +8,6 @@ class RootRouter extends RestlingRouter {
 
     @Override
     void init() throws Exception {
-        attachSubRouter("/api",UserRouter);
+        attachSubRouter("/api",ApiRouter);
     }
 }

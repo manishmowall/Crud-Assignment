@@ -2,9 +2,10 @@ package com.webonise.userCrud.pojos
 
 import groovy.transform.Canonical
 
+import java.sql.Timestamp
+
 @Canonical
 class UserPojo {
-    int id
     String name
-    int age
+    Timestamp dateOfBirth
 }

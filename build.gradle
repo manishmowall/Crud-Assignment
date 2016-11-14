@@ -58,10 +58,10 @@ dependencies {
 liquibase {
     activities {
         main {
-            changeLogFile 'databaseChangeLog.xml'
-            url 'jdbc:mysql://localhost:3306/Users?createDatabaseIfNotExist=true'
-            username 'root'
-            password ''
+            changeLogFile project.property('CHANGE_LOG_FILE_PATH')
+            url project.property('MYSQL_DB_URL') + '?createDatabaseIfNotExist=true'
+            username project.property('MYSQL_USER_LOGIN')
+            password project.property('MYSQL_USER_PASSWORD')
         }
     }
 }
@@ -69,11 +69,11 @@ liquibase {
 jooq {
     users(sourceSets.main) {
         jdbc {
-            driver = 'com.mysql.jdbc.Driver'
-            url = 'jdbc:mysql://localhost:3306/Users'
-            user = 'root'
-            password = ''
-            schema = 'Users'
+            driver = project.property('MYSQL_JDBC_DRIVER')
+            url = project.property('MYSQL_DB_URL')
+            user = project.property('MYSQL_USER_LOGIN')
+            password = project.property('MYSQL_USER_PASSWORD')
+            schema = project.property('JOOQ_DB_SCHEMA')
         }
         generator {
             name = 'org.jooq.util.DefaultGenerator'
@@ -82,16 +82,16 @@ jooq {
                 name = 'org.jooq.util.DefaultGeneratorStrategy'
             }
             database {
-                name = 'org.jooq.util.mysql.MySQLDatabase'
-                inputSchema = 'Users'
+                name = project.property('JOOQ_DB_NAME')
+                inputSchema = project.property('JOOQ_DB_SCHEMA')
             }
             generate {
                 relations = true
                 immutablePojos = true
             }
             target {
-                packageName = 'com.webonise.userCrud'
-                directory = 'src/main/java'
+                packageName = project.property('JOOQ_TARGET_PACKAGE_NAME')
+                directory = project.property('JOOQ_TARGET_DIRCTORY')
             }
         }
     }
